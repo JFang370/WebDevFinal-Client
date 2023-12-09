@@ -1,30 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+/*==================================================
+/src/store/index.js
 
-// Redux
-import { Provider } from "react-redux";
-import store from "./store";
+It contains the necessities and accessories for constructing the Redux Store.
+It creates a single Redux Store that holds the complete state tree of the app, so that the Redux Store state can access the states in all Reducers. 
+================================================== */
+import { combineReducers, applyMiddleware, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
-// Router
-import { BrowserRouter } from "react-router-dom";
+// Import all Reducers from the barrel file (/src/store/reducers/index.js)
+import * as reducers from './reducers';
 
-// The Provider component makes the Redux Store available to any nested components that need to access the Redux Store. 
-// The BrowserRouter component sets a common basename for the nested Routes.
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// Construct the Redux Store:
+// Create a single Root Reducer to combine all Reducers, so that the Redux Store state can 
+// access the states in all Reducers of the app.
+const rootReducer = combineReducers(reducers);  
+// Create a logger middleware to log dispatched Actions in console,
+// so that it displays prevState, nextState, and Action when an Action is dispatched.
+const logger = createLogger({ collapsed: true });  // Collapse console messages when displayed
+// Create a Redux Store using Root Reducer and a middleware pipeline consisting of Thunk and logger.
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Export the Redux Store by default, which will be provided to and injected within our entire application
+export default store;
