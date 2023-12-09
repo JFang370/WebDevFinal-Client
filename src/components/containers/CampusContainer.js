@@ -8,7 +8,7 @@ If needed, it also defines the component's "connect" function.
 import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchCampusThunk } from "../../store/thunks";
+import { fetchCampusThunk, fetchStudentThunk, deleteCampusThunk,editStudentThunk,fetchAllStudentsThunk} from "../../store/thunks";
 
 import { CampusView } from "../views";
 
@@ -17,6 +17,8 @@ class CampusContainer extends Component {
   componentDidMount() {
     // Get campus ID from URL (API link)
     this.props.fetchCampus(this.props.match.params.id);
+    this.props.fetchAllStudents();
+
   }
 
   // Render a Campus view by passing campus data as props to the corresponding View component
@@ -24,7 +26,14 @@ class CampusContainer extends Component {
     return (
       <div>
         <Header />
-        <CampusView campus={this.props.campus} />
+        <CampusView
+          campus={this.props.campus}
+          editStudent={this.props.editStudent}
+          fetchStudent={this.props.fetchStudent}
+          deleteCampus={this.props.deleteCampus}
+          fetchAllStudents={this.props.fetchAllStudents}
+          students={this.props.allStudents}
+        />
       </div>
     );
   }
@@ -36,6 +45,10 @@ class CampusContainer extends Component {
 const mapState = (state) => {
   return {
     campus: state.campus,  // Get the State object from Reducer "campus"
+    student: state.student,  // Get the State object from Reducer "student"
+    allStudents: state.allStudents,  // Get the State object from Reducer "allStudents"
+    
+
   };
 };
 // 2. The "mapDispatch" argument is used to dispatch Action (Redux Thunk) to Redux Store.
@@ -43,6 +56,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCampus: (id) => dispatch(fetchCampusThunk(id)),
+    editStudent: (student) => dispatch(editStudentThunk(student)),
+    fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
+    deleteCampus: (campusId) => dispatch(deleteCampusThunk(campusId)),
+    fetchAllStudents: () => dispatch(fetchAllStudentsThunk()),
+
   };
 };
 
