@@ -10,12 +10,12 @@ import { Link } from "react-router-dom";
 const AllCampusesView = (props) => {
   const {deleteCampus} = props;
   // If there is no campus, display a message.
-  
+
   
   if (!props.allCampuses.length) {
     return (
       <div>
-        <p>There are no campuses</p>  
+        <p>There are no currently no campuses</p>  
         <Link to={'/new-campus'}>
           <button>Add New Campus</button>
         </Link>

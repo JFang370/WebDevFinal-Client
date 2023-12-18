@@ -9,6 +9,7 @@ import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import { fetchStudentThunk, editStudentThunk } from "../../store/thunks";
 
 import EditStudentView from '../views/EditStudentView';
@@ -140,4 +141,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // EditStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(EditStudentContainer);
+export default withRouter(connect(mapState, mapDispatch)(EditStudentContainer));

@@ -9,6 +9,7 @@ import Header from './Header';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import { fetchCampusThunk, editCampusThunk } from "../../store/thunks";
 
 import EditCampusView from '../views/EditCampusView';
@@ -73,7 +74,7 @@ class EditCampusContainer extends Component {
   handleSubmit = async event => {
     event.preventDefault();  // Prevent browser reload/refresh after submit.
     let campus = {
-      id: this.state.id === "" ? this.props.campus.id : this.state.id,
+      id: this.state.id,
       name: this.state.name === "" ? this.props.campus.name : this.state.name,
       address: this.state.address === "" ? this.props.campus.address : this.state.address,
       imageUrl: this.state.imageUrl === "" ? this.props.campus.imageUrl : this.state.imageUrl,
@@ -140,4 +141,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // EditStudentContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(EditCampusContainer);
+export default withRouter(connect(mapState, mapDispatch)(EditCampusContainer));

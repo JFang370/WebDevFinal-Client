@@ -9,7 +9,7 @@ import Header from './Header';
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCampusThunk, fetchStudentThunk, deleteCampusThunk,editStudentThunk,fetchAllStudentsThunk} from "../../store/thunks";
-
+import { withRouter } from "react-router-dom";
 import { CampusView } from "../views";
 
 class CampusContainer extends Component {
@@ -67,4 +67,4 @@ const mapDispatch = (dispatch) => {
 // Export store-connected container by default
 // CampusContainer uses "connect" function to connect to Redux Store and to read values from the Store 
 // (and re-read the values when the Store State updates).
-export default connect(mapState, mapDispatch)(CampusContainer);
+export default withRouter(connect(mapState, mapDispatch)(CampusContainer));
